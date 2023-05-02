@@ -25,18 +25,14 @@ client.on("messageCreate", async function (message) {
 		if (message.author.bot) return;
 
 		await message.channel.sendTyping();
-		const gptAns = await openai.createCompletion({
-			model: "text-davinci-003",
-			prompt: `ChatGpt is a friendly Chatbot. \n\
-                ChatGpt :  Hello , How are you ? \n\ 
-                ${message.author.username} : ${message.content}\n\
-                ChatGpt :`,
-			max_tokens: 1500,
-			stop: ["Sujan:", "Bot:"],
+		const gptAns = await openai.createChatCompletion({
+			model: "gpt-3.5-turbo",
+			messages: [{ role: "user", content: `${message.content}` }],
+			temperature: 0.7,
+			max_tokens: 300,
 		});
-
-		message.reply(`${gptAns.data.choices[0].text}`);
-		console.log(gptAns.data.choices[0].text);
+		message.reply(`${gptAns.data.choices[0].message.content}`);
+		console.log(gptAns.data.choices[0].message.content);
 		return;
 	} catch (err) {
 		console.log(err.message);
