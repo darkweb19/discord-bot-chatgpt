@@ -29,7 +29,7 @@ client.on("messageCreate", async function (message) {
 			model: "gpt-3.5-turbo",
 			messages: [{ role: "user", content: `${message.content}` }],
 			temperature: 0.7,
-			max_tokens: 300,
+			max_tokens: 100,
 		});
 		message.reply(`${gptAns.data.choices[0].message.content}`);
 		console.log(gptAns.data.choices[0].message.content);
